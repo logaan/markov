@@ -6,20 +6,41 @@
   "Hello world")
 
 (def parsed0
-  {:start  ["Hello"]
-   "Hello" ["world"]
+  {:start  ["hello"]
+   "hello" ["world"]
    "world" [:end]})
 
 (deftest a-test
   (testing "Simplest case"
-    (is (= parsed0 (from-string text0)))
-    (is (= parsed0 (from-string-golf text0)))))
+    (is (= parsed0 (from-string text0)))))
 
-(def text1
-  "The quick brown fox. Jumped over the lazy dog.")
+(def texts
+  ["The quick brown fox. Jumped over the lazy dog."
+   "The slow brown fox. Jumped over many lazy dogs."])
 
 (def parsed1
-  {:start {"The" 1}})
+  {"dog"    ["."]
+   "fox"    ["." "."]
+   "over"   ["many" "the"]
+   "slow"   ["brown"]
+   :start   ["the" "the"]
+   "many"   ["lazy"]
+   "brown"  ["fox" "fox"]
+   "jumped" ["over" "over"]
+   "quick"  ["brown"]
+   "."      [:end "jumped" :end "jumped"]
+   "lazy"   ["dogs" "dog"]
+   "dogs"   ["."]
+   "the"    ["slow" "lazy" "quick"]})
 
-(def text2
-  "The slow brown fox. Jumped over many lazy dogs.")
+(deftest another-test
+  (testing "Two strings case"
+    (is (= parsed1
+           (-> (from-string (nth texts 0))
+               (from-string (nth texts 1)))))))
+
+(comment
+
+  (generate parsed1)
+
+  )
