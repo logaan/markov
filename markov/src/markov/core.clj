@@ -7,6 +7,7 @@
 (defn from-string
   ([string]
    (from-string {} string))
+
   ([table string]
    (let [parts (-> string
                    (str/lower-case)
@@ -19,10 +20,11 @@
 (defn generate
   ([table]
    (let [joined (->> (generate table :start)
-                  (take-while #(not (= :end %)))
-                  rest
-                  (str/join " "))]
+                     (take-while #(not (= :end %)))
+                     (rest)
+                     (str/join " "))]
      (str/replace joined #" \." ".")))
+
   ([table word]
    (let [next (rand-nth (table word))]
      (cons word (lazy-seq (generate table next))))))
