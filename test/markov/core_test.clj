@@ -11,8 +11,7 @@
    "world" [:end]})
 
 (deftest a-test
-  (testing "Simplest case"
-    (is (= parsed0 (from-string text0)))))
+  (is (= parsed0 (from-string text0))))
 
 (def texts
   ["The quick brown fox. Jumped over the lazy dog."
@@ -34,13 +33,9 @@
    "the"    ["slow" "lazy" "quick"]})
 
 (deftest another-test
-  (testing "Two strings case"
-    (is (= parsed1
-           (-> (from-string (nth texts 0))
-               (from-string (nth texts 1)))))))
+  (is (= parsed1
+         (-> (from-string (nth texts 0))
+             (from-string (nth texts 1))))))
 
-(comment
-
-  (generate parsed1)
-
-  )
+(deftest generates
+  (is (re-matches #"the .*[^ ]\." (generate parsed1))))
