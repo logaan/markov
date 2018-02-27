@@ -1,12 +1,12 @@
 (ns markov.core
   (:require [clojure.string :as str]))
 
-(defn from-readable [string]
+(defn- from-readable [string]
   (-> (str/lower-case string)
       (str/replace #"\." " .")
       (str/split #" ")))
 
-(defn add-token [table [first second]]
+(defn- add-token [table [first second]]
   (update-in table [first] conj second))
 
 (defn from-string
@@ -19,7 +19,7 @@
          pairs  (partition 2 1 tokens)]
      (reduce add-token table pairs))))
 
-(defn to-readable [words]
+(defn- to-readable [words]
   (-> (str/join " " words)
       (str/replace #" \." ".")))
 
