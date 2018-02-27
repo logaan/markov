@@ -24,8 +24,7 @@
       (str/replace #" \." ".")))
 
 (defn generate [table]
-  (->> :start
-       (iterate #(rand-nth (table %)))
+  (->> (iterate #(rand-nth (table %)) :start)
        (remove keyword?)
        (take-while some?)
        to-readable))
